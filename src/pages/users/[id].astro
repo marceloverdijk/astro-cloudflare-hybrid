@@ -1,12 +1,11 @@
 ---
-import { PrismaClient } from '@prisma/client';
+import { db, User } from 'astro:db';
 import Layout from '../../layouts/Layout.astro';
 
 export const prerender = true;
 
 export async function getStaticPaths() {
-  const prisma = new PrismaClient();
-  const users = await prisma.user.findMany()
+	const users = await db.select().from(User);
   return users.map((user) => {
     return {
       params: {
